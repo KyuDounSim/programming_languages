@@ -53,7 +53,7 @@ depth(LList([]));
 depth(LList([Elem(1), LList([Elem(2), LList([]), Elem(3)]), Elem(4)]));*)
 
 
-fun equal(LList([]), LList([])) = true | equal(Elem a, Elem b) = (a = b) | equal(LList(a_hd::a_tl), LList(b_hd::b_tl)) = if (a_hd = b_hd) then equal(LList(a_tl), LList(b_tl)) else false;
+fun equal(Elem a, Elem b) = (a = b) | equal(Elem _, LList _) = false | equal(LList _, Elem _) = false | equal(LList([]), LList([])) = true | equal(LList([]), LList(lst)) = false | equal(LList(lst), LList([])) = false | equal(LList(a_hd::a_tl), LList(b_hd::b_tl)) = if (a_hd = b_hd) then equal(LList(a_tl), LList(b_tl)) else false;
 
 (*
 val test_1 = Elem(3);
