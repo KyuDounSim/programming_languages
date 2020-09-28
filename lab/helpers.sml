@@ -8,6 +8,3 @@ fun reduce f [ ] v = v
 fun add (x,y) = x+y;
 fun mul (x,y) = x*y;
 fun bool2int (x) = if x then 1 else 0;
-
-fun containmentCount(lst, target) =
-    List.length (filter (String.isSubstring target) lst);
