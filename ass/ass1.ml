@@ -1,4 +1,4 @@
-(* SIM, Kyu Doun || kdsim || 2030657*)
+(* SIM, Kyu Doun || kdsim || 20306527*)
 
 fun sumDigits(x: int) =
     if x div 10 = 0 then 
