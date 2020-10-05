@@ -22,8 +22,8 @@ fun matchingList([], y ) = [] | matchingList(x, y) =
 fun cumulSum([]) = [] | cumulSum(n) = 
     hd(n)::incrementList(cumulSum(tl(n)), hd(n))
  
-fun frequencyPrefixSum([], y) = [] | frequencyPrefixSum(x, y) =
-    cumulSum(matchingList(x,y));
+fun frequencyPrefixSum([], y) = [] | frequencyPrefixSum(lst:int list, n:int) =
+    cumulSum(matchingList(lst, n));
  
 (*frequencyPrefixSum([1, 2, 2, 4, 5], 2);
 frequencyPrefixSum([1, 2, 2, 4, 5], 3);
@@ -39,7 +39,7 @@ LList ([Elem(1), LList([Elem(2), LList([Elem 1, Elem(3)]), Elem(4)])]);
 
 val a = LList([Elem(1), Elem(2)]);*)
 
-fun flatten (Elem(x)) = x::[] | flatten (LList([])) = [] | flatten(LList(head::tail)) = flatten(head)@flatten(LList(tail));
+fun flatten(LList([])) = [] | flatten (Elem(x)) = x::[] | flatten(LList(head::tail)) = flatten(head)@flatten(LList(tail));
 
 (*flatten(Elem(3));
 flatten(LList([]));
