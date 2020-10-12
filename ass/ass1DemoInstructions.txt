@@ -1,0 +1,27 @@
+Instructions for Assignment 1 Demo Sessions:
+
+Time: 9-10:20 AM on Oct 13 Tuesday
+Venue: COMP3031 L1 Zoom Session https://hkust.zoom.us/j/96719682957?pwd=S1lLd3U0QmNJZFlMWGNVSWdteHBYQT09
+
+Before the demo, log into a lab 2 machine, and have your ass1.ml and test.ml files in your lab 2 account.
+
+When it is your turn to demo, please following the following steps: 
+
+(1) Turn on your camera and share your lab2 machine screen in Zoom;
+
+(2) Invoke sml;
+
+(3) In SML, type the following two commands in order:
+
+use "ass1.ml";
+use "test.ml";
+
+(4) Answer a question from a TA or instructor when they appear in the group.
+
+Then your demo is finished!
+
+
+
+
+
+
