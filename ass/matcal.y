@@ -7,7 +7,9 @@
 /* Define tokens here */
 %token T_NL T_INT
  /********** Start: add your tokens here **********/
-
+%left     '+' '-'
+%left     '*'
+%nonassoc '(' ')'
  /********** End: add your tokens here **********/
 
 %%
@@ -18,7 +20,14 @@ line:   T_NL
     |   expr T_NL { print_matrix($1); };
 
 /********** Start: add your grammar rules here **********/
-
+expression:;
+sub_expression:;
+unit:;
+addition:;
+subtraction:;
+multiplication:;
+left_circle_bracket:;
+right_circle_brackiet:;
 
 /********** End: add your grammar rules here **********/
 

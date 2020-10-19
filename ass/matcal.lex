@@ -11,6 +11,10 @@ integer         [0-9]+
 
 /********** Start: add your definitions here **********/
 
+matrix          [left_bracket] rows [
+left_bracket    [\[]
+right_bracket   [\]]
+
 
 /********** End: add your definitions here **********/
 
