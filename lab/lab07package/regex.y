@@ -23,7 +23,7 @@ term: unit QUESTION_M   {$$ = $1 + 1;}
 | unit PLUS             {$$ = $1 + 1;}
 | unit                  {$$ = $1;};
 
-unit: LP expr RP        {$$ = 2;} 
+unit: LP expr RP        {$$ = $2 + 2;} 
 | CHAR                  {$$ = 0;};
 
 %%

@@ -1245,7 +1245,7 @@ yyreduce:
 
   case 12:
 #line 26 "regex.y" /* yacc.c:1646  */
-    {(yyval) = 2;}
+    {(yyval) = (yyvsp[-1]) + 2;}
 #line 1250 "regex.tab.c" /* yacc.c:1646  */
     break;
 
