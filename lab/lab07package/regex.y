@@ -18,13 +18,13 @@ line: NL
 expr: expr term         {$$ = $1 + $2;}
 | term                  {$$ = $1;};
 
-term: unit QUESTION_M   {$$ = 0;}
-| unit STAR             {$$ = 0;}
-| unit PLUS             {$$ = $1;}
+term: unit QUESTION_M   {$$ = $1 + 1;}
+| unit STAR             {$$ = $1 + 1;}
+| unit PLUS             {$$ = $1 + 1;}
 | unit                  {$$ = $1;};
 
-unit: LP expr RP        {$$ = $2; }
-| CHAR                  { $$ = 1; };
+unit: LP expr RP        {$$ = 2;} 
+| CHAR                  {$$ = 0;};
 
 %%
 

@@ -1221,19 +1221,19 @@ yyreduce:
 
   case 8:
 #line 21 "regex.y" /* yacc.c:1646  */
-    {(yyval) = 0;}
+    {(yyval) = (yyvsp[-1]) + 1;}
 #line 1226 "regex.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
 #line 22 "regex.y" /* yacc.c:1646  */
-    {(yyval) = 0;}
+    {(yyval) = (yyvsp[-1]) + 1;}
 #line 1232 "regex.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
 #line 23 "regex.y" /* yacc.c:1646  */
-    {(yyval) = (yyvsp[-1]);}
+    {(yyval) = (yyvsp[-1]) + 1;}
 #line 1238 "regex.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1245,13 +1245,13 @@ yyreduce:
 
   case 12:
 #line 26 "regex.y" /* yacc.c:1646  */
-    {(yyval) = (yyvsp[-1]); }
+    {(yyval) = 2;}
 #line 1250 "regex.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
 #line 27 "regex.y" /* yacc.c:1646  */
-    { (yyval) = 1; }
+    {(yyval) = 0;}
 #line 1256 "regex.tab.c" /* yacc.c:1646  */
     break;
 
