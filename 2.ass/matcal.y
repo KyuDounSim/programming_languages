@@ -32,7 +32,7 @@ sub_expr:   sub_expr MUL unit    {$$ = matrix_mul($1, $3);}
 unit    :   LCB expr RCB         {$$ = $2;}
         |   matrix               {$$ = print_matrix($1)};
 
-matrix  :   LB ROWS RB           {$$ = $2;}
+matrix  :   LB ROWS RB           {$$ = $2;};
 
 /********** End: add your grammar rules here **********/
 
