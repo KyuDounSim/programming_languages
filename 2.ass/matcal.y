@@ -18,7 +18,18 @@ line:   T_NL
     |   expr T_NL { print_matrix($1); };
 
 /********** Start: add your grammar rules here **********/
+expr:   expr ADD expr
+    |   expr SUB expr
+    |   sub_expr
+    ;
 
+sub_expr:    sub_expr MUL unit
+        |    unit
+        ;
+
+unit:   left_circle_bracket expr right_circle_braket
+    |   matrix
+    ;
 
 /********** End: add your grammar rules here **********/
 
