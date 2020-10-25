@@ -22,8 +22,8 @@ addition                [+]
 subtraction             [-]
 multiplication          [*]
 element                 {integer}
-row                     {row}{comma}{element}|{element}
-rows                    {rows}{semicolon}{row}|{row}
+row                     {row}{comma}{element} | {element}
+rows                    {rows}{semicolon}{row} | {row}
 matrix                  {left_bracket}{rows}{right_bracket}
 /********** End: add your definitions here **********/
 
@@ -39,8 +39,9 @@ matrix                  {left_bracket}{rows}{right_bracket}
 {addition}              return ADD;
 {subtraction}           return SUB; 
 {multiplication}        return MUL;
+{row}                   return ROW;
+{rows}                  return ROWS;
 {matrix}                return MATRIX;
- 
 
  /********** End: add your rules here **********/
 
