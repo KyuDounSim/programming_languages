@@ -364,8 +364,8 @@ static void yy_fatal_error (yyconst char msg[]  );
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 4
-#define YY_END_OF_BUFFER 5
+#define YY_NUM_RULES 13
+#define YY_END_OF_BUFFER 14
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -373,9 +373,10 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static yyconst flex_int16_t yy_accept[11] =
+static yyconst flex_int16_t yy_accept[20] =
     {   0,
-        0,    0,    5,    4,    3,    2,    1,    3,    1,    0
+        0,    0,   14,   13,   12,   11,    3,    4,    9,    7,
+        6,    8,   10,    5,    1,    2,   12,   10,    0
     } ;
 
 static yyconst flex_int32_t yy_ec[256] =
@@ -383,13 +384,13 @@ static yyconst flex_int32_t yy_ec[256] =
         1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    2,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    4,    4,    4,
-        4,    4,    4,    4,    4,    4,    4,    1,    1,    1,
+        1,    2,    1,    1,    1,    1,    1,    1,    1,    4,
+        5,    6,    7,    8,    9,    1,    1,   10,   10,   10,
+       10,   10,   10,   10,   10,   10,   10,    1,   11,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+       12,    1,   13,    1,    1,    1,    1,    1,    1,    1,
 
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -410,33 +411,38 @@ static yyconst flex_int32_t yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static yyconst flex_int32_t yy_meta[5] =
+static yyconst flex_int32_t yy_meta[14] =
     {   0,
-        1,    2,    1,    3
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1
     } ;
 
-static yyconst flex_int16_t yy_base[13] =
+static yyconst flex_int16_t yy_base[20] =
     {   0,
-        0,    0,    7,    8,    0,    8,    0,    0,    0,    8,
-        4,    2
+        0,    0,   18,   19,   15,   19,   19,   19,   19,   19,
+       19,   19,    6,   19,   19,   19,   13,    4,   19
     } ;
 
-static yyconst flex_int16_t yy_def[13] =
+static yyconst flex_int16_t yy_def[20] =
     {   0,
-       10,    1,   10,   10,   11,   10,   12,   11,   12,    0,
-       10,   10
+       19,    1,   19,   19,   19,   19,   19,   19,   19,   19,
+       19,   19,   19,   19,   19,   19,   19,   19,    0
     } ;
 
-static yyconst flex_int16_t yy_nxt[13] =
+static yyconst flex_int16_t yy_nxt[33] =
     {   0,
-        4,    5,    6,    7,    9,    8,   10,    3,   10,   10,
-       10,   10
+        4,    5,    6,    7,    8,    9,   10,   11,   12,   13,
+       14,   15,   16,   18,   17,   18,   17,   19,    3,   19,
+       19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
+       19,   19
     } ;
 
-static yyconst flex_int16_t yy_chk[13] =
+static yyconst flex_int16_t yy_chk[33] =
     {   0,
-        1,    1,    1,    1,   12,   11,    3,   10,   10,   10,
-       10,   10
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,   18,   17,   13,    5,    3,   19,   19,
+       19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
+       19,   19
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -460,7 +466,7 @@ char *yytext;
 /* Flex definitions */
 /********** Start: add your definitions here **********/
 /********** End: add your definitions here **********/
-#line 464 "matcal.c"
+#line 470 "matcal.c"
 
 #define INITIAL 0
 
@@ -642,14 +648,11 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 17 "matcal.lex"
+#line 29 "matcal.lex"
 
  /********** Start: add your rules here. **********/
- 
 
- /********** End: add your rules here **********/
-
-#line 653 "matcal.c"
+#line 656 "matcal.c"
 
 	if ( !(yy_init) )
 		{
@@ -702,13 +705,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 11 )
+				if ( yy_current_state >= 20 )
 					yy_c = yy_meta[(unsigned int) yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 8 );
+		while ( yy_base[yy_current_state] != 19 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -734,26 +737,72 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 23 "matcal.lex"
-{ yylval = (void*)atol(yytext); return T_INT; }
+#line 32 "matcal.lex"
+{return LSB;}
 	YY_BREAK
 case 2:
-/* rule 2 can match eol */
 YY_RULE_SETUP
-#line 24 "matcal.lex"
-{ return T_NL; }
+#line 33 "matcal.lex"
+{return RSB;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 25 "matcal.lex"
-/* ignore white spaces */
+#line 34 "matcal.lex"
+{return LCB;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 26 "matcal.lex"
+#line 35 "matcal.lex"
+{return RCB;}
+	YY_BREAK
+case 5:
+YY_RULE_SETUP
+#line 36 "matcal.lex"
+{return SEMICOLON;}
+	YY_BREAK
+case 6:
+YY_RULE_SETUP
+#line 37 "matcal.lex"
+{return COMMA;}
+	YY_BREAK
+case 7:
+YY_RULE_SETUP
+#line 38 "matcal.lex"
+{return ADD;}
+	YY_BREAK
+case 8:
+YY_RULE_SETUP
+#line 39 "matcal.lex"
+{return SUB;}
+	YY_BREAK
+case 9:
+YY_RULE_SETUP
+#line 40 "matcal.lex"
+{return MUL;}
+	YY_BREAK
+/********** End: add your rules here **********/
+case 10:
+YY_RULE_SETUP
+#line 43 "matcal.lex"
+{ yylval = (void*)atol(yytext); return T_INT; }
+	YY_BREAK
+case 11:
+/* rule 11 can match eol */
+YY_RULE_SETUP
+#line 44 "matcal.lex"
+{ return T_NL; }
+	YY_BREAK
+case 12:
+YY_RULE_SETUP
+#line 45 "matcal.lex"
+/* ignore white spaces */
+	YY_BREAK
+case 13:
+YY_RULE_SETUP
+#line 46 "matcal.lex"
 ECHO;
 	YY_BREAK
-#line 757 "matcal.c"
+#line 806 "matcal.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1045,7 +1094,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 11 )
+			if ( yy_current_state >= 20 )
 				yy_c = yy_meta[(unsigned int) yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
@@ -1073,11 +1122,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 11 )
+		if ( yy_current_state >= 20 )
 			yy_c = yy_meta[(unsigned int) yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
-	yy_is_jam = (yy_current_state == 10);
+	yy_is_jam = (yy_current_state == 19);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1747,7 +1796,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 26 "matcal.lex"
+#line 46 "matcal.lex"
 
 
 
