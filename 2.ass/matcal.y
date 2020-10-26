@@ -31,8 +31,7 @@ sub_expr:    sub_expr MUL unit {$$ = matrix_mul($1, $3);}
 unit:   LCB expr RCB {$$ = $2;}
     |   matrix    {$$ = $1;};
 
-matrix: LSB ROWS RSB {$$ = $2;}
-      | ROW          {$$ = $1;};
+matrix: LSB ROWS RSB {$$ = $2;};
 
 ROWS: ROWS SEMICOLON ROW {$$ = append_row($1, $3);}
     | ROW {$$ = $1;};

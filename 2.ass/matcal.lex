@@ -21,9 +21,9 @@ comma                       [,]
 addition                    [+]
 subtraction                 [-]
 multiplication              [*]
-row                         {row}{comma}{element}|{element}
+/*row                         {row}{comma}{element}|{element}
 rows                        {rows}{semicolon}{row}|{row}
-matrix                      {left_square_bracket}{rows}{right_square_bracket}|{row}
+matrix                      {left_square_bracket}{rows}{right_square_bracket}|{row}*/
 /********** End: add your definitions here **********/
 
 %%
