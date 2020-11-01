@@ -21,8 +21,8 @@ line:   T_NL
     |   expr T_NL { print_matrix($1); };
 
 /********** Start: add your grammar rules here **********/
-expr:   expr ADD expr {$$ = matrix_add($1, $3);}
-    |   expr SUB expr {$$ = matrix_sub($1, $3);}
+expr:   expr ADD sub_expr {$$ = matrix_add($1, $3);}
+    |   expr SUB sub_expr {$$ = matrix_sub($1, $3);}
     |   sub_expr      {$$ = $1;};
 
 sub_expr:    sub_expr MUL unit {$$ = matrix_mul($1, $3);}

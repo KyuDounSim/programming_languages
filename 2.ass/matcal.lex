@@ -10,8 +10,6 @@ newline         [\n]
 integer         [0-9]+
 
 /********** Start: add your definitions here **********/
-digit                       [0-9]
-element                     {integer}
 left_square_bracket         [[]
 right_square_bracket        []]
 left_circle_bracket         [(]

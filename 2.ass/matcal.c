@@ -648,7 +648,7 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 29 "matcal.lex"
+#line 24 "matcal.lex"
 
  /********** Start: add your rules here. **********/
 
@@ -737,69 +737,69 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 32 "matcal.lex"
+#line 27 "matcal.lex"
 {return LSB;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 33 "matcal.lex"
+#line 28 "matcal.lex"
 {return RSB;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 34 "matcal.lex"
+#line 29 "matcal.lex"
 {return LCB;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 35 "matcal.lex"
+#line 30 "matcal.lex"
 {return RCB;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 36 "matcal.lex"
+#line 31 "matcal.lex"
 {return SEMICOLON;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 37 "matcal.lex"
+#line 32 "matcal.lex"
 {return COMMA;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 38 "matcal.lex"
+#line 33 "matcal.lex"
 {return ADD;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 39 "matcal.lex"
+#line 34 "matcal.lex"
 {return SUB;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 40 "matcal.lex"
+#line 35 "matcal.lex"
 {return MUL;}
 	YY_BREAK
 /********** End: add your rules here **********/
 case 10:
 YY_RULE_SETUP
-#line 43 "matcal.lex"
+#line 38 "matcal.lex"
 { yylval = (void*)atol(yytext); return T_INT; }
 	YY_BREAK
 case 11:
 /* rule 11 can match eol */
 YY_RULE_SETUP
-#line 44 "matcal.lex"
+#line 39 "matcal.lex"
 { return T_NL; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 45 "matcal.lex"
+#line 40 "matcal.lex"
 /* ignore white spaces */
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 46 "matcal.lex"
+#line 41 "matcal.lex"
 ECHO;
 	YY_BREAK
 #line 806 "matcal.c"
@@ -1796,7 +1796,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 46 "matcal.lex"
+#line 41 "matcal.lex"
 
 
 
