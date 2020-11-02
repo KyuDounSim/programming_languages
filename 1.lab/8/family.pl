@@ -12,6 +12,8 @@ male('James'). 		% fact 9
 female('Mary'). 	% fact 10
 female('Judy'). 	% fact 11
 
-sibling(X, Y) :- parent(_1,X), parent(_1,Y).      % rule 1
+sibling(X, Y) :- parent(_1,X), parent(_1,Y), X \== Y. % rule 1
 ancestor(X, Y) :- parent(X, Y).                   % rule 2
 ancestor(X, Y) :- parent(_1, Y), ancestor(X, _1). % rule 3
+older30(X) :- age(X, Y), Y > 30.                     % rule 4
+brother(X, Y) :- male(X), sibling(X, Y).          % rule 5
