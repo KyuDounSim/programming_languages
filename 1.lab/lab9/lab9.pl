@@ -4,5 +4,5 @@
 %list_suffix(Atail, [B|Btail]) :- list_suffix(Atail, Btail).
 
 list_prefix(Elem, List) :- append(Elem, _, List).
-list_suffix(Elem, List) :- append(_, Elem, List).
+list_suffix(Elem, List) :- append(_, Elem, List), Elem \== [], Elem \== List.
 list_prefix_suffix(X, Y) :- list_prefix(X,Y); list_suffix(X, Y).
