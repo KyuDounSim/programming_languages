@@ -205,7 +205,7 @@ chem_path(A,B,Visited,Path) :-
     Path = [C|P1].
 
 chem_shortest_path(A, B, Shortest_paths) :-
-    aggregate(min(Len, All_paths), (path(A, B, All_paths), length(All_paths, Len)), min(Len, Shortest_paths)).
+    aggregate(min(Len, All_paths), (chem_path(A, B, All_paths), length(All_paths, Len)), min(Len, Shortest_paths)).
 
 
 c6ring_pre(X) :- 
@@ -232,7 +232,7 @@ atom_elements(n3,nitrogen,[o5, o6, c3]).
 atom_elements(o5,oxygen,[n3]).
 atom_elements(o6,oxygen,[n3]).
 atom_elements(h7,hydrogen,[c7]).
-atom_elements(h8,hydrogen,[c7]).
+%atom_elements(h8,hydrogen,[c7]).
 atom_elements(h9,hydrogen,[c7]).
 atom_elements(c2,carbon,[c4,c5,n2]).
 atom_elements(c1,carbon,[c6,c4,n1]).
@@ -240,7 +240,10 @@ atom_elements(c4,carbon,[c1,c7,c2]).
 atom_elements(c3,carbon,[c6,c5,n3]).
 atom_elements(c5,carbon,[c3,c2,h5]).
 atom_elements(c6,carbon,[c1,c3,h1]).
-atom_elements(c7,carbon,[c4,h7,h8,h9]).
+atom_elements(c7,carbon,[c4,h7,n4,h9]).
+atom_elements(o7,oxygen,[n4]).
+atom_elements(o8,oxygen,[n4]).
+atom_elements(n4,nitrogen,[c7,o7,o8]).
 
 n_cnt([], 0).
 n_cnt([H|T], Count) :-
@@ -299,12 +302,32 @@ cno2(X) :-
     print(Lists).
 */
 
+/*
+member_append(Element, [], []).
+member_append(Element, [Element|Rest], Result) :- 
+    member_append(Element, Rest, Next),
+    Result = [Element | Next].    
+
+member_append(Element, [E1|Rest], Result):-
+    member_append(Rest, Reulst1),    
+    Result = Next.
+ */
+    
 tnt_pre(X) :-
-    c6ring(C6ring), no2(No2_list),
+    c6ring(C6ring_raw), flatten(C6ring_raw, C6ring), no2(No2_list),
     maplist(atom_elements, No2_list, _, No2_elem_con_list),
     maplist(extract_c, No2_elem_con_list, No2_c),
-    flatten(No2_c, No2_c_flat), print(No2_c_flat),
-    member(No2_c_flat, C6ring).
+    flatten(No2_c, No2_c_flat),
+    bagof(No2_c_e, (member(No2_c_e, No2_c_flat), member(No2_c_e, C6ring)), Filtered_c),
+    findall(Elem1, (member(Elem1, Filtered_c), member(Elem2, Filtered_c), Elem1 \== Elem2, chem_path(Elem1, Elem2, A1),length(A1, A1_len), A1_len =:= 3), Elems_raw),
+    sort(Elems_raw, Elems),
+    Elems == Filtered_c,
+    %bagof(Nochange,(member(Nochange,C6ring), member(Elem, Elems), atom_elements(Elem, _, Elem_con), extract_n(Elem_con, N_ext), member(N_ext_mem, N_ext), atom_elements(N_ext_mem, _, AAA), Input_raw = [AAA, N_ext], flatten(Input_raw, Input_flat), sort(Input_flat, Elem)), X).
+    bagof(All, (member(All, C6ring), member(Special, Elems), Special == All, atom_elements(Special, _, Special_con), extract_n(Special_con, Special_n), member(Special_n_elem, Speical_n), atom_elements(Special_n_elem, _, N_con)), X). %Input_raw = [Special_n_elem, N_con], flatten(Input_raw, Input_flat), All = Input_flat), X).
+
+tnt(X) :-
+    findall(A, tnt_pre(A), Pre),
+    sort(Pre, X).
 
 tnt_trash(X) :-
     c6ring(C6ring), no2(No2_list),
@@ -359,6 +382,6 @@ tnt_trash(X) :-
         )
     ).
 
-tnt(X) :-
+tnt_trash_1(X) :-
     findall(A, tnt_pre(A), Pre_X),
     sort(Pre_X, X).
