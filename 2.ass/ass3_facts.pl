@@ -13,6 +13,7 @@ edge('F', 'H').
 edge('F', 'G').
 
 /* Q3, Q4 */
+/*
 atom_elements(h1,hydrogen,[c1]).
 atom_elements(h2,hydrogen,[c2]).
 atom_elements(h4,hydrogen,[c4]).
@@ -21,15 +22,21 @@ atom_elements(h6,hydrogen,[c6]).
 atom_elements(h7,hydrogen,[c7]).
 atom_elements(h8,hydrogen,[c7]).
 atom_elements(h9,hydrogen,[c7]).
+
+atom_elements(h10,hydrogen,[c8]).
+atom_elements(h11,hydrogen,[c8]).
+atom_elements(h12,hydrogen,[c8]).
+
 atom_elements(c1,carbon,[c2,c6,h1]).
 atom_elements(c2,carbon,[c1,c3,h2]).
 atom_elements(c3,carbon,[c2,c7,c4]).
-atom_elements(c4,carbon,[c3,c5,h4]).
+atom_elements(c4,carbon,[c3,c5,c8]).
 atom_elements(c5,carbon,[c4,c6,h5]).
 atom_elements(c6,carbon,[c1,c5,h6]).
 atom_elements(c7,carbon,[c3,h7,h8,h9]).
 
-
+atom_elements(c8, carbon, [c4, h10, h11, h12]).
+*/
 /* Q5 */
 atom_elements(h1,hydrogen,[c1]).
 atom_elements(n1,nitrogen,[o1, o2, c2]).

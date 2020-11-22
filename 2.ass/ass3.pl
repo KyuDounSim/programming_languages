@@ -7,8 +7,8 @@
 %    sum is head+remain.
 
 /*length(?list, ?Int)*/
-xs([1, 2, 3, 4, 5.06, 6]).
-ys([1, 3, 2, 6, 7.23, 7]).
+%xs([1, 2, 3, 4, 5.06, 6]).
+%ys([1, 3, 2, 6, 7.23, 7]).
 
 list_square([], []).
 list_square([H|T], [SQRD_H|SQRD_T]) :-
@@ -21,20 +21,20 @@ list_pointwise([H1|T1], [H2|T2], [RESULT_H|RESULT_T]) :-
     list_pointwise(T1, T2, RESULT_T).    
 
 linear_regression(A, B) :-
-   xs(X), ys(Y),
-   list_pointwise(X, Y, XY),
-   list_square(X, X_SQRD),
-   sumlist(X, X_SUM),
-   sumlist(X_SQRD, X_SQRD_SUM),
-   sumlist(Y, Y_SUM),
-   sumlist(XY, XY_SUM),
-   length(X_SQRD, X_SQRD_LEN),
-   length(XY, XY_LEN),
-   B is (Y_SUM * X_SQRD_SUM - X_SUM * XY_SUM) / (X_SQRD_LEN * X_SQRD_SUM - X_SUM * X_SUM),
-   A is (XY_LEN * XY_SUM - X_SUM * Y_SUM) / (X_SQRD_LEN * X_SQRD_SUM - X_SUM * X_SUM).
+    xs(X), ys(Y),
+    list_pointwise(X, Y, XY),
+    list_square(X, X_SQRD),
+    sumlist(X, X_SUM),
+    sumlist(X_SQRD, X_SQRD_SUM),
+    sumlist(Y, Y_SUM),
+    sumlist(XY, XY_SUM),
+    length(X_SQRD, X_SQRD_LEN),
+    length(XY, XY_LEN),
+    B is (Y_SUM * X_SQRD_SUM - X_SUM * XY_SUM) / (X_SQRD_LEN * X_SQRD_SUM - X_SUM * X_SUM),
+    A is (XY_LEN * XY_SUM - X_SUM * Y_SUM) / (X_SQRD_LEN * X_SQRD_SUM - X_SUM * X_SUM).
 
 /*
- * edge('A', 'C').
+edge('A', 'C').
 edge('A', 'B').
 edge('A', 'G').
 edge('C', 'D').
@@ -221,7 +221,6 @@ c6ring(X) :-
     %member(X, Almost_2).
 
 %Q5
-
 /*
 atom_elements(h1,hydrogen,[c1]).
 atom_elements(n1,nitrogen,[o1, o2, c2]).
@@ -281,7 +280,7 @@ atom_elements(c2,carbon,[c1,c4,n1]).
 atom_elements(c3,carbon,[c1,c6,c7,c8]).
 atom_elements(c4,carbon,[c2,c5,n8]).
 atom_elements(c5,carbon,[c4,c6,n2]).
-atom_elements(c6,carbon,[c2,c5,n3]).
+atom_elements(c6,carbon,[c3,c5,n3]).
 
 atom_elements(n8, nitrogen, [c4]).
 
