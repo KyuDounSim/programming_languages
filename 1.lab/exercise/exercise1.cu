@@ -10,13 +10,19 @@ __global__ void common_elements(int* d_A, int* d_B, int* d_C) {
 	// loop over A and B and count the number of common elements
 	// add your code here
 
-	for (int i = tid; i < 2048; i += num_threads) {
-		for (int j = 0; j < 2048; ++j){
-			if (d_A[i] == d_B[j]){
-				++d_C[tid];
-			}
-		}
+        for (int i = tid; i < 2048 ; i += num_threads) {
+        
+        for(int j = tid; j < 2048 ; j += num_threads){
+            if(d_A[i] == d_B[j]){
+                d_C[i] = 1;
+                break;
+            }
+            
+        }
+        d_C[i] = 0;
+
     }
+
 }
 
 int main() {
@@ -53,7 +59,7 @@ int main() {
 	
 	int num_common_elements = 0;
 
-    for (int i = 0; i < num_blocks_per_grid * num_threads_per_grid; i++) {
+	for (int i = 0; i < num_blocks_per_grid * num_threads_per_grid; i++) {
 		num_common_elements += C[i];
 	}
 
