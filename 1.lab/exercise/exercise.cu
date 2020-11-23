@@ -9,16 +9,15 @@ __global__ void common_elements(int* d_A, int* d_B, int* d_C) {
 	
 	// loop over A and B and count the number of common elements
 	// add your code here
-    int i, j, cnt = 0;
-    for(i = 0; i < 2048; ++i) {
-        for(j = 0; j < 2048; ++j) {
-            if(d_A[i] == d_B[j]) {
-                ++cnt; 
-            } 
-        }
-    }
 
-    *(d_C) = cnt;
+	for (int i = tid; i < 2048; i += num_threads) {
+		for (int j = 0; j < 2048; ++j){
+			int compare_item = ;
+			if (d_A[i] == d_B[j]){
+				d_C[tid] += 1;
+			}
+		}
+    }
 }
 
 int main() {
