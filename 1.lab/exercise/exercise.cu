@@ -13,11 +13,12 @@ __global__ void common_elements(int* d_A, int* d_B, int* d_C) {
     for(i = 0; i < 2048; ++i) {
         for(j = 0; j < 2048; ++j) {
             if(d_A[i] == d_B[j]) {
-                d_C[cnt] = d_A[i];
                 ++cnt; 
             } 
         }
     }
+
+    *(d_C) = cnt;
 }
 
 int main() {
