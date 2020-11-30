@@ -171,7 +171,51 @@ int main(int argc, char **argv) {
 	cudaMemcpy(d_in, h_in, sizeof(int) * numElems, cudaMemcpyHostToDevice);
 
 	/*begin--- fill your code here to achieve functionality of frequencyPrefixSum */
+	dim3 grid(1);
+	dim3 block(1024);
 
+    auto t_start = std::chrono::high_resolution_clock::now();
+
+    cudaEvent_t cuda_start, cuda_end;
+    cudaEventCreate(&cuda_start);
+    cudaEventCreate(&cuda_end);
+    float naive_kernel_time;
+    float improved_kernel_time;
+    cudaEventRecord(cuda_start);
+
+	prefix_sum_kernel<<<grid, block>>>(
+			d_out,
+			d_in,
+			numElems);
+
+    cudaEventRecord(cuda_end);
+
+    cudaEventSynchronize(cuda_start);
+    cudaEventSynchronize(cuda_end);
+    cudaEventElapsedTime(&naive_kernel_time, cuda_start, cuda_end);
+	cudaDeviceSynchronize();
+	cudaMemcpy(h_out, d_out, sizeof(int) * numElems, cudaMemcpyDeviceToHost);
+	assert(
+			utils::write_file(
+					"naive_out.txt",
+					h_out
+			) == 0
+	);
+
+	cudaEventRecord(cuda_start);
+
+	improved_prefix_sum_kernel<<<grid, block>>>(
+			d_out,
+			d_in,
+			numElems
+			);
+
+	cudaEventRecord(cuda_end);
+
+	cudaEventSynchronize(cuda_start);
+	cudaEventSynchronize(cuda_end);
+	cudaEventElapsedTime(&improved_kernel_time, cuda_start, cuda_end);
+	cudaDeviceSynchronize();
 
 	/*end ---- fill your code here to achieve functionality of frequencyPrefixSum */
 
