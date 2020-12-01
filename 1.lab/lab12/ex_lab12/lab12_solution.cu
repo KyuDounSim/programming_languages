@@ -155,7 +155,7 @@ int main(int argc, char **argv) {
         	filename
     		) == 0
 		);
-	assert(utils::read_target() == 0);
+    assert(utils::read_target() == 0);
 
 	dim3 grid(1);
 	dim3 block(1024);
@@ -172,32 +172,22 @@ int main(int argc, char **argv) {
 
 	/*begin--- fill your code here to achieve functionality of frequencyPrefixSum */
 
-    auto t_start = std::chrono::high_resolution_clock::now();
+	int *d_map_out;
+	cudaMalloc((void**)&d_map_out, sizeof(int) * numElems);
+	int *h_map_out = (int*) malloc(sizeof(int) * numElems);
 
-    cudaEvent_t cuda_start, cuda_end;
-    cudaEventCreate(&cuda_start);
-    cudaEventCreate(&cuda_end);
-    float naive_kernel_time;
-    float improved_kernel_time;
-    cudaEventRecord(cuda_start);
-
-	prefix_sum_kernel<<<grid, block>>>(
-			d_out,
+	map_kernel<<<grid, block>>>(
+			d_map_out,
 			d_in,
-			numElems);
+			numElems,
+			utils::target
+	);
 
-    cudaEventRecord(cuda_end);
-
-    cudaEventSynchronize(cuda_start);
-    cudaEventSynchronize(cuda_end);
-    cudaEventElapsedTime(&naive_kernel_time, cuda_start, cuda_end);
 	cudaDeviceSynchronize();
-	cudaMemcpy(h_out, d_out, sizeof(int) * numElems, cudaMemcpyDeviceToHost);
-	assert(
-			utils::write_file(
-					"naive_out.txt",
-					h_out
-			) == 0
+	improved_prefix_sum_kernel<<<grid, block>>>(
+			d_out,
+			d_map_out,
+			numElems
 	);
 
 	/*end ---- fill your code here to achieve functionality of frequencyPrefixSum */
