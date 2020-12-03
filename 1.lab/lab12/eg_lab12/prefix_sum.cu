@@ -60,7 +60,7 @@ namespace utils {
  */
 __global__ void prefix_sum_kernel(int *d_out, int *d_in, int numElems) {
 	unsigned int d_hist_idx = blockDim.x * blockIdx.x + threadIdx.x;
-
+    //printf("%d\n", numElems);
 	if (d_hist_idx >= numElems)
 	{
 		return;
