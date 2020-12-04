@@ -1,0 +1,9 @@
+edge('A', 'B').
+edge('A', 'F').
+edge('A', 'G').
+edge('B', 'C').
+edge('C', 'D').
+edge('C', 'H').
+edge('D', 'E').
+edge('E', 'F').
+edge('E', 'I').
