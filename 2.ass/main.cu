@@ -88,7 +88,6 @@ int main(int argc, char **argv) {
      */
     int *c_c, *c_n, *c_h, *n_o;
     int c_c_size, c_n_size, c_h_size, n_o_size;
-
     assert(read_file(
         filename, c_c, c_n, c_h, n_o, 
         c_c_size, c_n_size, c_h_size, n_o_size
