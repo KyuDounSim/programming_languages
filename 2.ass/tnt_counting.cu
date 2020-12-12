@@ -45,7 +45,7 @@ __global__ void combination_generator(int * cn, bool* mask, int cn_len, int* d_o
     }
 }
 
-__global__ void createRing_fin(int* d_cc, int cc_len, int* d_cn, int cn_len, int* d_out_ring) {
+__global__ void find_connectors(int* d_cc, int cc_len, int* d_cn, int cn_len, int* d_out_ring) {
         int tid = blockDim.x * blockIdx.x + threadIdx.x;
         int num_threads = blockDim.x * gridDim.x;
         int cc_len_half = cc_len / 2;
@@ -60,10 +60,6 @@ __global__ void createRing_fin(int* d_cc, int cc_len, int* d_cn, int cn_len, int
                         if(d_cc[l] == a || d_cc[l] == b || d_cc[l] == c) {
                             continue;
                         }
-                        
-                        //d_out_ring[6 * search + 1] = a;
-                        //d_out_ring[6 * search + 3] = b;
-                        //d_out_ring[6 * search + 5] = c;
                         
                         for(int m = l + 1; m < cc_len; ++m) {
                             if(d_cc[m] == a || d_cc[m] == b || d_cc[m] == c) {
@@ -237,46 +233,6 @@ __global__ void addNO2(int* d_c6, int ring_num, int* d_cn, int cn_size, int* d_n
     int tid = blockDim.x * blockIdx.x + threadIdx.x;
     int num_threads = blockDim.x * gridDim.x;
 
-    
-    // 여기는 잘 돌아가는데, 왜 밑에꺼는 터지는지 모르겠다
-    /*
-    for(int i = 0; i < ring_num; ++i) {
-        for(int j = 0; j < 6; ++j) {
-            d_out[15 * i + j] = d_c6[6 * i + j];
-        }
-    }
-    */
-    
-    //printf("Ringnum is %d\n", ring_num);
-    //printf("cn_size is %d\n", cn_size);
-    //printf("no_size is %d\n", no_size);
-
-    
-    // 여기서 터진다, 그러고보니 터지는게 아니라 그냥 thread의 pattern 같다
-    /*
-    for(int i = 0; i < ring_num; ++i) {
-        for(int j = 0; j < 6; ++j) {
-            printf("%d", d_c6[6 * i + j]);
-        }
-    }
-    */
-
-    
-    // 이 두 forloop에도 아무것도 안 들어있다
-
-    /*
-    for(int i = 0; i < cn_size * 2; ++i) {
-        printf("%d", d_cn[i]);
-    }
-    */
-    // printf("\n");
-    
-    /*
-    for(int i = 0; i < no_size * 2; ++i) {
-        printf("%d", d_no[i]);
-    }
-    */
-
     for(int i = 0; i < ring_num; ++i) {
         for(int j = 0; j < 6; ++j) {
             d_out[15 * i + j] = d_c6[6 * i + j];
@@ -398,11 +354,14 @@ void tnt_counting(int num_blocks_per_grid, int num_threads_per_block,
             bool * h_valid_cn = (bool*) malloc(c_n_size * sizeof(bool));
             cudaMemcpy(h_valid_cn, d_valid_cn_len, c_n_size * sizeof(bool), cudaMemcpyDeviceToHost);
 
+
+            /*
             //1 1 1
             for(int i = 0; i < c_n_size; ++i) {
                 std::cout << h_valid_cn[i] << " ";
             }
             std::cout << std::endl;
+            */
 
             // 3 -> therefore only 1 combination possible
             int good_cno2_num = 0;
@@ -432,33 +391,40 @@ void tnt_counting(int num_blocks_per_grid, int num_threads_per_block,
             cudaMemcpy(h_3_tuple, d_3_tuple, 3 * comb_cnt * sizeof(int), cudaMemcpyDeviceToHost);
 
 
+
             // prints out 0 2 4
+            /*
             for(int i = 0; i < comb_cnt; ++i) {
                 for(int j = 0; j < 3; ++j) {
                     std::cout << h_3_tuple[i * 3 + j] << " ";
                 }
                 std::cout << std::endl;
             }
-            
+            */
+
             // c1 c2 c3 사이에 1, 1, 2 이거 알려주는거임
             int *d_c_c;
             cudaMalloc((void**) &d_c_c, c_c_size * sizeof(int)); 
             cudaMemcpy(d_c_c, c_c, c_c_size * sizeof(int), cudaMemcpyHostToDevice);
 
+
             int *d_connector_num;
             cudaMalloc((void**) &d_connector_num, 3 * comb_cnt * sizeof(int));
 
-            createRing_fin<<<num_blocks_per_grid, num_threads_per_block>>>(d_c_c, c_c_size, d_3_tuple, comb_cnt * 3, d_connector_num);
+            find_connectors<<<num_blocks_per_grid, num_threads_per_block>>>(d_c_c, c_c_size, d_3_tuple, comb_cnt * 3, d_connector_num);
             cudaDeviceSynchronize();
 
             int *h_connector_num = (int*) malloc(comb_cnt * 3 * sizeof(int));
             cudaMemcpy(h_connector_num, d_connector_num, 3 * sizeof(int), cudaMemcpyDeviceToHost);
+            
 
+            /*
             std::cout << "number of each connectors called createRing_fin" << std::endl;
             for(int i = 0; i < comb_cnt * 3 ; ++i) {
                 std::cout << h_connector_num[i] << " ";
             }
             std::cout << std::endl;
+            */
 
             int total_rings = 0;
 
@@ -470,7 +436,7 @@ void tnt_counting(int num_blocks_per_grid, int num_threads_per_block,
                 total_rings += temp;
             }
 
-            std::cout << "Total ring num is " << total_rings << std::endl;
+            //std::cout << "Total ring num is " << total_rings << std::endl;
 
             //cudaMemcpy(d_connector_num, h_connector_num, 3 * sizeof(int), cudaMemcpyHostToDevice);
 
@@ -487,6 +453,8 @@ void tnt_counting(int num_blocks_per_grid, int num_threads_per_block,
 
             cudaMemcpy(h_rings, d_rings, total_rings * 6 * sizeof(int), cudaMemcpyDeviceToHost);
 
+
+            /*
             std::cout << "h_ring start" << std::endl;
             for(int i = 0; i < total_rings; ++i) {
                 for(int j = 0; j < 6; ++j) {
@@ -494,6 +462,7 @@ void tnt_counting(int num_blocks_per_grid, int num_threads_per_block,
                 }
                 std::cout << std::endl;
             } 
+            */
 
             // Add NO2
             int* d_c6rings;
@@ -508,12 +477,15 @@ void tnt_counting(int num_blocks_per_grid, int num_threads_per_block,
             int* h_tnt = (int*) malloc(total_rings * 15 * sizeof(int));
             cudaMemcpy(h_tnt, d_tnt, (total_rings * 15 * sizeof(int)), cudaMemcpyDeviceToHost);
 
+
+            /*
             for(int i = 0; i < total_rings; ++i) {
                 for(int j = 0; j < 15; ++j) {
                     std::cout << h_tnt[i * 15 + j] << " ";
                 }
                 std::cout << std::endl;
             }
+            */
 
             // 48 Mappings
             /*
@@ -526,15 +498,95 @@ void tnt_counting(int num_blocks_per_grid, int num_threads_per_block,
             cudaMemcpy(h_tnt_48, d_tnt_48, (total_rings  * 15 * 48 * sizeof(int)), cudaMemcpyDeviceToHost);
             */
 
-            int* h_tnt_48 = (int*) malloc(total_rings * 48 * 15 * sizeof(int));
-
+            
             /*
+            int* temp = (int*) malloc(total_rings * 48 * 15 * sizeof(int));
             for(int i = 0; i < total_rings * 48; ++i) {
                 for(int k = 0; k < 15; ++k) {
-                    h_tnt_48[15 * i + k] = -100;
+                    temp[15 * i + k] = 1;
                 }
             }
+            h_tnt_48 = temp;
             */
+
+            final_result_size = total_rings * 48;
+            final_results = (int*) malloc(final_result_size * 15 * sizeof(int));
+
+            for (int i = 0; i < total_rings; i++) {
+
+                int* c6_rings = (int*) malloc(6 * sizeof(int));
+                int* n3_array = (int*) malloc(3 * sizeof(int));
+                int* o6_array = (int*) malloc(6 * sizeof(int));
+
+                for(int j = 0; j < 6; ++j) {
+                    c6_rings[j] = h_tnt[i * 15 + j];
+                }
+
+                for(int j = 0; j < 3; ++j) {
+                    n3_array[j] = h_tnt[i * 15 + j + 6];
+                }
+            
+                for(int j = 0; j < 6; ++j) {
+                    o6_array[j] = h_tnt[i * 15 + j + 9];    
+                }
+                
+                for(int j = 0; j < 48; ++j) {
+                    for (int k = 0; k < NUM_TNT_VERTICES; k++) {
+                        if(0 <= k && k <= 5) //c6
+                        {
+                            final_results[k * final_result_size + (48 * i + j)] = c6_rings[k];
+                        }
+                        
+                        else if(6 <= k && k <= 8) //n3
+                        {
+                            final_results[k * final_result_size + (48 * i + j)] = n3_array[k % 3];
+                        }
+                        
+                        else // o6
+                        {
+                            //std::cout << "o6 index is " <<  k % 6 << std::endl;
+                            //std::cout << "o6 arrays gives " <<  o6_array[k % 6] << std::endl;
+                            final_results[k * final_result_size + (48 * i + j)] = o6_array[k % 6];
+                        }
+                    }
+                }
+
+                for(int j = 0; j < final_result_size; j +=8) {
+                    for(int k = 0; k < 6; ++k) {
+                        //h_tnt_48[k * final_result_size + (48 * i + j)] = h_tnt_48[];
+                    }
+                }
+            }
+
+            //final_results = h_tnt_48;
+            // freememory
+            cudaFree(d_cn);
+            cudaFree(d_valid_cn_len);
+            cudaFree(d_no);
+            cudaFree(d_valid_no);
+            cudaFree(d_3_tuple);
+            cudaFree(d_valid_no);
+            cudaFree(d_c_c);
+            cudaFree(d_connector_num);
+            cudaFree(d_rings);
+            cudaFree(d_tnt);
+            cudaFree(d_c6rings);
+
+            free(h_rings);
+            free(h_valid_cn);
+            free(h_3_tuple);
+            free(h_connector_num);
+            free(h_tnt);
+
+            /*
+            for (int i = 0; i < total_rings; i++) {
+                    for(int j = 0; j < 48; ++j) {
+                        for (int k = 0; k < NUM_TNT_VERTICES; k++) {
+
+                            h_tnt_48[k * final_result_size + (48 * i + j)] = 0;
+                    }
+                }
+            }
 
             for(int i = 0; i < total_rings; ++i) {
 
@@ -547,20 +599,36 @@ void tnt_counting(int num_blocks_per_grid, int num_threads_per_block,
                 }
 
                 for(int j = 0; j < 3; ++j) {
-                    n3_array[j] = h_tnt[i * 15 + (j + 6)];    
+                    n3_array[j] = h_tnt[i * 15 + j + 6];
                 }
             
                 for(int j = 0; j < 6; ++j) {
-                    n3_array[j] = h_tnt[i * 15 + (j + 9)];    
+                    o6_array[j] = h_tnt[i * 15 + j + 9];    
+                }
+
+                for (int j = 0; j < 48; ++j) {
+                    for (int k = 0; k < 15; ++k) {
+                        h_tnt[k * final_result_size + j] = 0;
+                    }
+                }
+
+            */
+                /*
+
+                for(int j = 0; j < 6; ++j) {
+                    h_tnt_48[48 * i + ((j + shift) % 6) +  k] = c6_rings[j];
                 }
 
                 for(int shift = 0; shift < 6; ++shift) {
                     for(int j = 0; j < 6; ++j) {
                         for(int k = 0; k < 8; ++k) {
-                            h_tnt_48[48 * 15 * i + ((j + shift) % 6) +  k * 15] = c6_rings[j];
+                            h_tnt_48[48 * i + ((j + shift) % 6) +  k] = c6_rings[j];
                         }
                     }
                 }
+                */
+
+                /*
 
                 for(int shift = 0; shift < 3; ++shift) {
                     for(int j = 0; j < 3; ++j) {
@@ -575,28 +643,27 @@ void tnt_counting(int num_blocks_per_grid, int num_threads_per_block,
                         if(j == 0) {
                             for(int row = 0; row < 2; ++row) {
                                 for(int pat = 0; pat < 4; ++pat) {
-                                    h_tnt_48[(48 * 15 * i + 9 + j * 2) + (row) + pat * 15] = n3_array[2 * j + k];
+                                    h_tnt_48[(48 * 15 * i + 9 + j * 2) + (row) + pat * 15] = o6_array[2 * j + k];
                                 }
                             }
                         } else if(j == 1) {
                             for(int row = 0; row < 4; ++row) {
                                 for(int pat = 0; pat < 2; ++pat) {
-                                    h_tnt_48[(48 * 15 * i + 9 + j * 2) + (row % 2) +  (row * 2 + pat) * 15] = n3_array[2 * j + k];
+                                    h_tnt_48[(48 * 15 * i + 9 + j * 2) + (row % 2) +  (row * 2 + pat) * 15] = o6_array[2 * j + k];
                                 }
                             }
                         } else {
                             for(int row = 0; row < 8; ++row) {
-                                h_tnt_48[(48 * 15 * i + 9 + j * 2) +  row * 15 + row % 2] = n3_array[2 * j + k];
+                                h_tnt_48[(48 * 15 * i + 9 + j * 2) +  row * 15 + row % 2] = o6_array[2 * j + k];
                             }
                         }
                     }
                 }
+                
             }
+            */
 
-            final_results = h_tnt_48;
-            final_result_size = total_rings * 48;
 
-            // freememory
             /*
             int *h_valid_no = (int*) malloc(n_o_size * sizeof(int)), *h_valid_no_len = (int*) malloc(sizeof(int));
             cudaMemcpy(h_valid_no, d_valid_no, n_o_size * sizeof(int), cudaMemcpyDeviceToHost);
